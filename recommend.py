@@ -5,16 +5,6 @@ import torch
 from RBM import RBM
 
 def recommend(rbm, user_id, data, num_movies):
-    '''
-    Parameters
-    ----------
-    user_id : id of user in dataframe
-
-    Returns
-    -------
-    movie-cat_ids of top 10 recommended movies
-
-    '''
     # convert user data to RBM Input
     device = rbm.W.device
     user_df = data[data['userid'] == user_id].values

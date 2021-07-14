@@ -1,8 +1,10 @@
 import numpy as np
 import pandas as pd
-import wget
 import os
-import zipfile
+from peewee import *
+
+from model.book import Book
+from model.comment import Comment
 
 
 def load_dataset():
@@ -16,6 +18,17 @@ def load_dataset():
            'cname', 'description', 'cata', 'content']
     books = pd.read_csv(book_filename, header=None, names=col, usecols=['bookid', 'Name'], low_memory=False)
     return data, books
+
+def load_data_from_db():
+    book = Book.select(Book)
+    books = pd.DataFrame(columns=['bookid', 'Name'])
+    for b in book:
+        books.append[book.id, book.book_name]
+
+    rate = Comment.select(Comment)
+    rates = pd.DataFrame(columns=['userid', 'bookid', 'score'])
+    for r in rate:
+        rates.append[Comment.from_id, Comment.book_id, Comment.review_rank]
 
 
 def convert(data, num_books):
@@ -74,7 +87,7 @@ def pre_process(data, books):
 
     return book_arr, ratings_arr, d, books
 
-
-if __name__ == '__main__':
-    data, books = load_dataset()
-    pre_process(data, books)
+#
+# if __name__ == '__main__':
+#     data, books = load_dataset()
+#     pre_process(data, books)
