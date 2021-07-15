@@ -17,18 +17,26 @@ def load_dataset():
            'deal_mount', 'look_mount', 'discount', 'image_url', 'store_mount', 'store_time', 'pack_style', 'is_shelf',
            'cname', 'description', 'cata', 'content']
     books = pd.read_csv(book_filename, header=None, names=col, usecols=['bookid', 'Name'], low_memory=False)
+    print(data)
+    print(books)
     return data, books
 
-def load_data_from_db():
-    book = Book.select(Book)
-    books = pd.DataFrame(columns=['bookid', 'Name'])
-    for b in book:
-        books.append[book.id, book.book_name]
 
+def load_data_from_db():
+    list = []
     rate = Comment.select(Comment)
     rates = pd.DataFrame(columns=['userid', 'bookid', 'score'])
     for r in rate:
-        rates.append[Comment.from_id, Comment.book_id, Comment.review_rank]
+        rates = rates.append({'userid': r.from_id, 'bookid': r.book_id, 'score': r.review_rank}, ignore_index=True)
+        list.append(r.book_id)
+
+    book = Book.select(Book)
+    books = pd.DataFrame(columns=['bookid', 'Name'])
+    for b in book:
+        if b.id in list:
+            books = books.append({'bookid': b.id, 'Name': b.book_name}, ignore_index=True)
+
+    return rates, books
 
 
 def convert(data, num_books):

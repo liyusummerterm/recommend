@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 import torch
 import torch.nn as nn
 import time
-from math import ceil
+import math
 from load_data import *
 from RBM import RBM
 from recommend import *
@@ -14,9 +14,11 @@ from recommend import *
 # load data
 
 data, books = load_data_from_db()
+print(data)
+# data, books = load_dataset()
 book_arr, ratings_arr, d, books = pre_process(data, books)
 num_books = len(books)
-
+print(d)
 # train-test split 80:20
 
 book_train, book_test, ratings_train, ratings_test = train_test_split(book_arr, ratings_arr, test_size=0.2,
@@ -42,10 +44,10 @@ print("------------------------------------------------------")
 
 print("\nTraining Started \n")
 start_time = time.time()
-epochs = 2
+epochs = 50
 batch_size = 128
 N = book_train.shape[0]
-num_batches = ceil(N / batch_size)
+num_batches = math.ceil(N / batch_size)
 loss_fn = nn.MSELoss()
 for epoch in range(epochs):
     loss = 0.0
@@ -75,7 +77,7 @@ print("------------------------------------------------------")
 print("\nTesting Started")
 batch_size = 128
 N = book_test.shape[0]
-num_batches = ceil(N / batch_size)
+num_batches = math.ceil(N / batch_size)
 loss_fn = nn.MSELoss()
 loss = 0.0
 i = 0
@@ -105,13 +107,18 @@ with open(path, 'wb') as output:
 with open("book-id-dict.pkl", 'wb') as output:
     pickle.dump(d, output)
 
-rbm_model = open(path, 'rb')
+rbm_model = open('RBM.pkl', 'rb')
 rbm = pickle.load(rbm_model)
-print("\nRBM pickle file saved at : %s\n" % (os.path.abspath(path)))
+print("\nRBM pickle file saved at : %s\n" % (os.path.abspath('RBM.pkl')))
 print("------------------------------------------------------")
-user_id = 125779
+user_id = 41
 inds = recommend(rbm, user_id, data, num_books)
-rec_books = [books.loc[d[x.item()]]['Name'] for x in inds]
-print("\nRecommended books for User-id %s : \n" % (user_id))
-for book in rec_books:
-    print(book)
+for x in inds:
+    book_index = x.item()
+    # if x.item() > 780:
+
+    print(d[book_index])
+# rec_books = [books.loc[d[x.item()]]['Name'] for x in inds]
+# print("\nRecommended books for User-id %s : \n" % (user_id))
+# for book in rec_books:
+#     print(book)
