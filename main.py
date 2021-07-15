@@ -111,7 +111,7 @@ rbm_model = open('RBM.pkl', 'rb')
 rbm = pickle.load(rbm_model)
 print("\nRBM pickle file saved at : %s\n" % (os.path.abspath('RBM.pkl')))
 print("------------------------------------------------------")
-user_id = 41
+user_id = 10
 inds = recommend(rbm, user_id, data, num_books)
 for x in inds:
     book_index = x.item()
