@@ -19,7 +19,7 @@ print(d)
 # train-test split 80:20
 
 book_train, book_test, ratings_train, ratings_test = train_test_split(book_arr, ratings_arr, test_size=0.2,
-                                                                        shuffle=True)
+                                                                      shuffle=True)
 
 print("Number of total users : ", book_arr.shape[0])
 print("Number of users for training : ", book_train.shape[0])
@@ -62,7 +62,7 @@ for epoch in range(epochs):
         out = out.to(device)
         input = input.to(device)
         loss += loss_fn(input, out).item()
-        print("process: %s" %(100*i/N) )
+        print("process: %s" % (100 * i / N))
 
     print("Epoch %s => Loss = %s" % (epoch + 1, loss / num_batches))
 
@@ -115,7 +115,11 @@ for x in inds:
     # if x.item() > 780:
 
     print(d[book_index])
+
+
 # rec_books = [books.loc[d[x.item()]]['Name'] for x in inds]
 # print("\nRecommended books for User-id %s : \n" % (user_id))
 # for book in rec_books:
 #     print(book)
+
+
