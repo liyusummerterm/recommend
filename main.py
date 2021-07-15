@@ -1,17 +1,14 @@
 import pickle
-import os
-import numpy as np
-import pandas as pd
 from sklearn.model_selection import train_test_split
 import torch
 import torch.nn as nn
 import time
 import math
-from load_data import *
-from RBM import RBM
-from recommend import *
+from recommend.load_data import *
+from recommend.RBM import RBM
 
 # load data
+from recommend.recommend import recommend
 
 data, books = load_data_from_db()
 print(data)

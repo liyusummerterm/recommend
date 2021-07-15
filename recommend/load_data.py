@@ -8,8 +8,8 @@ from model.comment import Comment
 
 
 def load_dataset():
-    ratings_filename = 'book_data/bx_book_ratings.csv'
-    book_filename = 'book_data/book_info.csv'
+    ratings_filename = '../book_data/bx_book_ratings.csv'
+    book_filename = '../book_data/book_info.csv'
     data = pd.read_csv(ratings_filename, header=None, names=['userid', 'bookid', 'score'])
 
     col = ['bookid', 'book_category_id', 'store_id', 'Name', 'outline', 'detail', 'press', 'author', 'Publish_date',
